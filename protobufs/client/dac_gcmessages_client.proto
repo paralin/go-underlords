@@ -1,3 +1,4 @@
+import "steammessages.proto";
 import "dac_gcmessages_common.proto";
 
 option optimize_for = SPEED;
@@ -68,7 +69,7 @@ enum EItemEditorReservationResult {
 }
 
 message CMsgPartyMMInfo {
-	optional .EDACPlatform platform = 1 [default = k_eDACPlatform_PC];
+	optional .EDACPlatform platform = 1 [default = k_eDACPlatform_None];
 	optional .CMsgRegionPingTimesClient ping_times = 2;
 	optional uint32 client_version = 3;
 }
@@ -121,6 +122,8 @@ message CMsgClientToGCLeaveLobbyResponse {
 message CMsgClientWelcomeDAC {
 	optional uint32 currency = 1;
 	repeated .CExtraMsgBlock extra_messages = 2;
+	optional uint32 compatibility_version = 3;
+	optional uint64 steam_announcement_gid = 5;
 }
 
 message CMsgClientToGCIsInMatchmaking {
@@ -147,6 +150,7 @@ message CMsgClientToGCPartyCreate {
 	optional .CMsgPartyMMInfo party_mm_info = 1;
 	optional bool start_ready = 2;
 	optional uint32 invite_account_id = 3;
+	optional bool disable_party_code = 4;
 }
 
 message CMsgClientToGCPartyCreateResponse {
@@ -268,6 +272,7 @@ message CMsgClientToGCPartyStartMatchResponse {
 		k_eTooManySpectatorsForPrivate = 17;
 		k_eTooFewPlayersForMM = 18;
 		k_eTooFewPlayersForPrivate = 19;
+		k_eMismatchedVersions = 20;
 	}
 
 	optional .CMsgClientToGCPartyStartMatchResponse.EResponse result = 1 [default = k_eInternalError];
@@ -307,6 +312,7 @@ message CMsgGCToClientPartyEvent {
 		k_eMatchMakingStopped_NoServerRegion = 7;
 		k_eLeftParty = 8;
 		k_eDeclinedInvite = 9;
+		k_eMatchMakingStopped_FailedOther = 10;
 	}
 
 	optional fixed64 party_id = 1;
@@ -506,7 +512,7 @@ message CMsgClientToGCRecordLocalBotMatch {
 	optional uint32 difficulty = 5;
 	optional uint32 rounds = 6;
 	optional uint32 remaining_players = 7;
-	optional .EDACPlatform platform = 8 [default = k_eDACPlatform_PC];
+	optional .EDACPlatform platform = 8 [default = k_eDACPlatform_None];
 }
 
 message CMsgClientToGCRerollChallenge {
@@ -613,6 +619,10 @@ message CMsgClientToGCCheckFriendCodeResponse {
 		k_eKeyExpired = 6;
 		k_eKeyConsumed = 7;
 		k_eAlreadyFriends = 8;
+		k_eTargetHasTooManyFriends = 9;
+		k_eHaveTooManyFriends = 10;
+		k_eBlocked = 11;
+		k_eIgnored = 12;
 	}
 
 	optional .CMsgClientToGCCheckFriendCodeResponse.EResponse result = 1 [default = k_eInternalError];

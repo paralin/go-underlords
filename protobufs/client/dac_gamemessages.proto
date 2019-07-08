@@ -1,3 +1,5 @@
+import "steammessages.proto";
+import "dac_gcmessages_common.proto";
 import "usermessages.proto";
 
 option optimize_for = SPEED;
@@ -153,6 +155,7 @@ message CClientReconnectInfo {
 	optional uint32 time_updated = 3;
 	optional uint32 udp_connect_ip = 4;
 	optional uint32 udp_connect_port = 5;
+	optional uint32 compatibility_version = 7;
 }
 
 message CMsgPlayerOrder {
@@ -252,6 +255,7 @@ message CMsgUnit {
 	optional int32 gold_value = 6;
 	optional uint32 kill_count = 8;
 	optional uint32 kill_streak = 9;
+	repeated .EUnitKeyword keywords = 10;
 }
 
 message CMsgShopItem {
@@ -298,6 +302,15 @@ message CMsgPublicPlayerState {
 	optional uint32 vs_opponent_wins = 30;
 	optional uint32 vs_opponent_losses = 31;
 	optional uint32 vs_opponent_draws = 32;
+	optional .EDACPlatform platform = 33 [default = k_eDACPlatform_None];
+	optional uint32 event_tier = 34;
+	optional uint32 progress_xp = 35;
+	optional string persona_name = 36;
+	optional uint32 wins = 37;
+	optional uint32 losses = 38;
+	optional uint32 global_leaderboard_rank = 39;
+	optional uint32 net_worth = 41;
+	optional int32 stored_win_gold = 42;
 	oneof opponent {
 		uint32 opponent_player_slot = 24;
 		uint32 opponent_neutral_wave = 25;
@@ -377,7 +390,6 @@ message CMsgMatchState {
 	optional float state_change_time = 4;
 	optional float state_duration = 5;
 	optional float paused_state_time_remaining = 6;
-	optional bool is_tutorial = 7;
 }
 
 message CMsgUnitPositionAndFacing {
@@ -402,6 +414,7 @@ message CMsgUnitSnapshot {
 	optional uint32 kill_count = 12;
 	optional uint32 kill_streak = 13;
 	optional int32 max_health = 14;
+	repeated .EUnitKeyword keywords = 15;
 	optional bool client_synthesized_for_setup = 1001;
 	optional bool client_is_on_bench = 1002;
 }
@@ -532,6 +545,14 @@ message CMsgCombatEvent {
 	}
 }
 
+message CMsgGlobalCombatEvent {
+	optional float event_time = 1;
+	optional uint32 source_player_slot = 2;
+	oneof details {
+		uint32 soundevent_hash = 3;
+	}
+}
+
 message CMsgRoundCombat {
 	optional int32 round_number = 1;
 	optional float combat_duration = 4;
@@ -540,6 +561,7 @@ message CMsgRoundCombat {
 	optional .ERoundCombatResult result = 7 [default = ERoundCombatResult_Draw];
 	optional uint32 player_player_slot = 8;
 	repeated .CMsgCombatMetersSnapshot meter_snapshots = 11;
+	repeated .CMsgGlobalCombatEvent global_events = 12;
 	oneof opponent {
 		uint32 opponent_player_slot = 9;
 		uint32 opponent_neutral_wave = 10;
