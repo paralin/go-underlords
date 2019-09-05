@@ -15,17 +15,18 @@ enum EGCDACCommonMessages {
 }
 
 enum EDACMatchMode {
+	k_EDACMatchMode_Invalid = 0;
 	k_EDACMatchMode_Casual = 1;
 	k_EDACMatchMode_PrivateLobby = 2;
 	k_EDACMatchMode_SoloBot = 3;
+	k_EDACMatchMode_Ranked = 4;
 }
 
-enum EDACPlatform {
-	k_eDACPlatform_PC = 1;
-	k_eDACPlatform_Mac = 2;
-	k_eDACPlatform_Linux = 3;
-	k_eDACPlatform_Android = 4;
-	k_eDACPlatform_iOS = 5;
+enum EDACGameMode {
+	k_EDACGameMode_Invalid = 0;
+	k_EDACGameMode_Normal = 1;
+	k_EDACGameMode_Turbo = 2;
+	k_EDACGameMode_BuddyBattles = 3;
 }
 
 enum EDACLobbyTeam {
@@ -70,6 +71,7 @@ enum EDACAIType {
 	k_EDACAIType_PB17 = 37;
 	k_EDACAIType_PB18 = 38;
 	k_EDACAIType_PB19 = 39;
+	k_EDACAIType_PB20 = 40;
 }
 
 enum EDACMatchState {
@@ -106,11 +108,12 @@ message CServerLobbyData_PlayerInfo {
 	message LoadoutSlot {
 		optional uint32 loadout_slot = 1;
 		optional uint32 def_index = 2;
+		optional uint32 loadout_sub_slot = 3;
 	}
 
-	message Achievement {
-		optional uint32 achievement_id = 1;
-		optional uint32 progress = 2;
+	message Currency {
+		optional uint32 currency_id = 1;
+		optional uint32 amount = 2;
 	}
 
 	message Challenge {
@@ -119,16 +122,29 @@ message CServerLobbyData_PlayerInfo {
 		optional uint32 sequence_id = 3;
 		optional uint32 slot_id = 4;
 		optional uint32 config_id = 5;
+		optional uint32 claimed = 6;
+	}
+
+	message VirtualItem {
+		optional uint32 def_index = 1;
+		optional uint32 equip_slot = 2;
+		optional uint32 equip_sub_slot = 3;
+	}
+
+	message Event {
+		optional uint32 event_id = 1;
+		optional bool event_owned = 2;
+		repeated .CServerLobbyData_PlayerInfo.Challenge challenges = 3;
+		repeated .CServerLobbyData_PlayerInfo.Currency currencies = 4;
+		repeated .CServerLobbyData_PlayerInfo.VirtualItem virtual_items = 5;
 	}
 
 	optional uint32 account_id = 1;
 	optional uint32 mmr_level = 2;
-	optional uint32 event_id = 3;
-	optional uint32 event_points = 4;
-	optional bool event_owned = 5;
-	repeated .CServerLobbyData_PlayerInfo.LoadoutSlot loadout = 6;
-	repeated .CServerLobbyData_PlayerInfo.Achievement achievements = 7;
-	repeated .CServerLobbyData_PlayerInfo.Challenge challenges = 8;
+	repeated .CServerLobbyData_PlayerInfo.LoadoutSlot loadout = 3;
+	repeated .CServerLobbyData_PlayerInfo.Event events = 4;
+	optional uint32 global_leaderboard_rank = 5;
+	optional uint32 underlord = 6;
 }
 
 message CMsgRegionPingTimesClient {
@@ -137,13 +153,16 @@ message CMsgRegionPingTimesClient {
 }
 
 message CSODACLobby {
+	optional uint32 server_version = 1;
+	optional uint32 compatibility_version = 2;
 	optional fixed64 server_steam_id = 3;
 	optional uint64 lobby_id = 5;
 	optional uint64 match_id = 6;
 	optional .ELobbyServerState server_state = 8 [default = k_eLobbyServerState_Assign];
-	optional .EDACMatchMode match_mode = 10 [default = k_EDACMatchMode_Casual];
+	optional .EDACMatchMode match_mode = 10 [default = k_EDACMatchMode_Invalid];
 	optional uint32 udp_connect_ip = 11;
 	optional uint32 udp_connect_port = 12;
+	optional .EDACGameMode game_mode = 13 [default = k_EDACGameMode_Invalid];
 }
 
 message CSODACParty {
@@ -153,6 +172,8 @@ message CSODACParty {
 		optional uint32 rights_flags = 3;
 		optional bool is_ready = 4;
 		optional .CSODACParty.EPlayerType player_type = 5 [default = k_ePlayerType_Player];
+		optional uint32 compatibility_version = 6;
+		optional .EDACPlatform platform = 7 [default = k_eDACPlatform_None];
 	}
 
 	message LeftMember {
@@ -170,6 +191,8 @@ message CSODACParty {
 	enum EMemberRights {
 		k_eMemberRights_Admin = 1;
 		k_eMemberRights_Creator = 2;
+		k_eMemberRights_RankedMM = 4;
+		k_eMemberRights_HighRankedMM = 8;
 	}
 
 	enum EPlayerType {
@@ -190,8 +213,6 @@ message CSODACParty {
 	repeated .CSODACParty.Invite invites = 3;
 	optional bool in_match_making = 5;
 	optional string party_password = 6;
-	optional uint32 min_client_version = 8;
-	optional uint32 max_client_version = 9;
 	repeated .CSODACParty.LeftMember left_members = 10;
 	optional uint64 join_code = 11;
 	optional .CSODACParty.EBotDifficulty bot_difficulty = 12 [default = k_eBotDifficulty_None];
@@ -200,12 +221,19 @@ message CSODACParty {
 message CSOGameAccountClient {
 	optional uint32 account_id = 1 [(key_field) = true];
 	optional uint32 mmr_level = 2;
+	optional uint32 mmr_leaderboard = 3;
+	optional uint64 flags = 4;
+	optional uint32 unlock_ranked_progress = 5;
+	optional uint32 active_underlord = 7;
+	optional float mmr_level_partial_progress = 6;
+	optional uint32 mmr_level_score = 8;
 }
 
 message CMsgStartFindingMatchInfo {
 	optional uint32 client_version = 2;
-	optional .EDACMatchMode match_mode = 3 [default = k_EDACMatchMode_Casual];
-	optional .EDACPlatform platform = 4 [default = k_eDACPlatform_PC];
+	optional .EDACMatchMode match_mode = 3 [default = k_EDACMatchMode_Invalid];
+	optional .EDACPlatform platform = 4 [default = k_eDACPlatform_None];
+	optional .CSODACParty.EBotDifficulty bot_difficulty = 5 [default = k_eBotDifficulty_None];
 }
 
 message CMsgAnyToGCReportAsserts {
