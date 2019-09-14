@@ -1,0 +1,3 @@
+[submodule "generator/GameTracking-Underlords"]
+	path = generator/GameTracking-Underlords
+	url = https://github.com/SteamDatabase/GameTracking-Underlords.git
