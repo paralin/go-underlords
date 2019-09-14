@@ -6,6 +6,29 @@ import (
 	"github.com/paralin/go-underlords/protocol"
 )
 
+// CheckFriendCode checks a friend code.
+// Request ID: k_EMsgClientToGCCheckFriendCode
+// Response ID: k_EMsgClientToGCCheckFriendCodeResponse
+// Request type: CMsgClientToGCCheckFriendCode
+// Response type: CMsgClientToGCCheckFriendCodeResponse
+func (d *DAC) CheckFriendCode(
+	ctx context.Context,
+	friendCode uint64,
+) (*protocol.CMsgClientToGCCheckFriendCodeResponse, error) {
+	req := &protocol.CMsgClientToGCCheckFriendCode{
+		FriendCode: &friendCode,
+	}
+	resp := &protocol.CMsgClientToGCCheckFriendCodeResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCCheckFriendCode),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCCheckFriendCodeResponse),
+		resp,
+	)
+}
+
 // CreateFriendCode creates a friend code.
 // Request ID: k_EMsgClientToGCCreateFriendCode
 // Response ID: k_EMsgClientToGCCreateFriendCodeResponse
@@ -277,25 +300,25 @@ func (d *DAC) RerollChallenge(
 	)
 }
 
-// SendCheckFriendCode sends a check friend code.
-// Request ID: k_EMsgClientToGCCheckFriendCode
-// Response ID: k_EMsgClientToGCCheckFriendCodeResponse
-// Request type: CMsgClientToGCCheckFriendCode
-// Response type: CMsgClientToGCCheckFriendCodeResponse
-func (d *DAC) SendCheckFriendCode(
+// RevokeFriendCode revokes a friend code.
+// Request ID: k_EMsgClientToGCRevokeFriendCode
+// Response ID: k_EMsgClientToGCRevokeFriendCodeResponse
+// Request type: CMsgClientToGCRevokeFriendCode
+// Response type: CMsgClientToGCRevokeFriendCodeResponse
+func (d *DAC) RevokeFriendCode(
 	ctx context.Context,
 	friendCode uint64,
-) (*protocol.CMsgClientToGCCheckFriendCodeResponse, error) {
-	req := &protocol.CMsgClientToGCCheckFriendCode{
+) (*protocol.CMsgClientToGCRevokeFriendCodeResponse, error) {
+	req := &protocol.CMsgClientToGCRevokeFriendCode{
 		FriendCode: &friendCode,
 	}
-	resp := &protocol.CMsgClientToGCCheckFriendCodeResponse{}
+	resp := &protocol.CMsgClientToGCRevokeFriendCodeResponse{}
 
 	return resp, d.MakeRequest(
 		ctx,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCCheckFriendCode),
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCRevokeFriendCode),
 		req,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCCheckFriendCodeResponse),
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCRevokeFriendCodeResponse),
 		resp,
 	)
 }
@@ -591,49 +614,6 @@ func (d *DAC) SendReplacementSDRTicket(
 	)
 }
 
-// SendRevokeFriendCode sends a revoke friend code.
-// Request ID: k_EMsgClientToGCRevokeFriendCode
-// Response ID: k_EMsgClientToGCRevokeFriendCodeResponse
-// Request type: CMsgClientToGCRevokeFriendCode
-// Response type: CMsgClientToGCRevokeFriendCodeResponse
-func (d *DAC) SendRevokeFriendCode(
-	ctx context.Context,
-	friendCode uint64,
-) (*protocol.CMsgClientToGCRevokeFriendCodeResponse, error) {
-	req := &protocol.CMsgClientToGCRevokeFriendCode{
-		FriendCode: &friendCode,
-	}
-	resp := &protocol.CMsgClientToGCRevokeFriendCodeResponse{}
-
-	return resp, d.MakeRequest(
-		ctx,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCRevokeFriendCode),
-		req,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCRevokeFriendCodeResponse),
-		resp,
-	)
-}
-
-// SendStopMatchmaking sends a stop matchmaking.
-// Request ID: k_EMsgClientToGCStopMatchmaking
-// Response ID: k_EMsgClientToGCStopMatchmakingResponse
-// Request type: CMsgClientToGCStopMatchmaking
-// Response type: CMsgClientToGCStopMatchmakingResponse
-func (d *DAC) SendStopMatchmaking(
-	ctx context.Context,
-) (*protocol.CMsgClientToGCStopMatchmakingResponse, error) {
-	req := &protocol.CMsgClientToGCStopMatchmaking{}
-	resp := &protocol.CMsgClientToGCStopMatchmakingResponse{}
-
-	return resp, d.MakeRequest(
-		ctx,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCStopMatchmaking),
-		req,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCStopMatchmakingResponse),
-		resp,
-	)
-}
-
 // SetActiveUnderlord sets a active underlord.
 // Request ID: k_EMsgClientToGCSetActiveUnderlord
 // Response ID: k_EMsgClientToGCSetActiveUnderlordResponse
@@ -730,6 +710,26 @@ func (d *DAC) StartPartyMatch(
 		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCPartyStartMatch),
 		req,
 		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCPartyStartMatchResponse),
+		resp,
+	)
+}
+
+// StopMatchmaking stops a matchmaking.
+// Request ID: k_EMsgClientToGCStopMatchmaking
+// Response ID: k_EMsgClientToGCStopMatchmakingResponse
+// Request type: CMsgClientToGCStopMatchmaking
+// Response type: CMsgClientToGCStopMatchmakingResponse
+func (d *DAC) StopMatchmaking(
+	ctx context.Context,
+) (*protocol.CMsgClientToGCStopMatchmakingResponse, error) {
+	req := &protocol.CMsgClientToGCStopMatchmaking{}
+	resp := &protocol.CMsgClientToGCStopMatchmakingResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCStopMatchmaking),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCStopMatchmakingResponse),
 		resp,
 	)
 }
