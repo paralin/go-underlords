@@ -3007,7 +3007,9 @@ func init() {
 	proto.RegisterType((*CMsgGCToServerUpdateConsoleCommands)(nil), "protocol.CMsgGCToServerUpdateConsoleCommands")
 }
 
-func init() { proto.RegisterFile("dac_gcmessages_server.proto", fileDescriptor_f2ad3b17d77698a3) }
+func init() {
+	proto.RegisterFile("dac_gcmessages_server.proto", fileDescriptor_f2ad3b17d77698a3)
+}
 
 var fileDescriptor_f2ad3b17d77698a3 = []byte{
 	// 3465 bytes of a gzipped FileDescriptorProto

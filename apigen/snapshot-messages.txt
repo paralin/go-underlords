@@ -1,0 +1,67 @@
+9010	CLIENT	k_EMsgClientToGCStartMatchmaking	StartMatchmaking
+9011	GC    	k_EMsgClientToGCStartMatchmakingResponse
+9012	CLIENT	k_EMsgClientToGCStopMatchmaking	StopMatchmaking
+9013	GC    	k_EMsgClientToGCStopMatchmakingResponse
+9014	GC    	k_EMsgGCToClientMatchmakingStopped
+9015	CLIENT	k_EMsgClientToGCLeaveLobby	LeaveLobby
+9016	GC    	k_EMsgClientToGCLeaveLobbyResponse
+9017	CLIENT	k_EMsgClientToGCIsInMatchmaking	SendIsInMatchmaking
+9018	GC    	k_EMsgClientToGCIsInMatchmakingResponse
+9120	GC    	k_EMsgGCToClientSDRTicket
+9121	CLIENT	k_EMsgClientToGCReplacementSDRTicket	SendReplacementSDRTicket
+9122	GC    	k_EMsgClientToGCReplacementSDRTicketResponse
+9123	CLIENT	k_EMsgClientToGCPartyCreate	CreateParty
+9124	GC    	k_EMsgClientToGCPartyCreateResponse
+9125	CLIENT	k_EMsgClientToGCPartyLeave	LeaveParty
+9126	GC    	k_EMsgClientToGCPartyLeaveResponse
+9127	CLIENT	k_EMsgClientToGCPartyJoin	JoinParty
+9128	GC    	k_EMsgClientToGCPartyJoinResponse
+9129	CLIENT	k_EMsgClientToGCPartyAction	SendPartyAction
+9130	GC    	k_EMsgClientToGCPartyActionResponse
+9131	CLIENT	k_EMsgClientToGCPartyStartMatch	StartPartyMatch
+9132	GC    	k_EMsgClientToGCPartyStartMatchResponse
+9133	CLIENT	k_EMsgClientToGCPartyInviteUser	SendPartyInviteUser
+9134	GC    	k_EMsgClientToGCPartyInviteUserResponse
+9135	GC    	k_EMsgGCToClientPartyEvent
+9136	CLIENT	k_EMsgClientToGCPartyClientVersion	SendPartyClientVersion
+9137	GC    	k_EMsgGCToClientCanRejoinParty
+9138	CLIENT	k_EMsgClientToGCPartyJoinViaCode	JoinPartyViaCode
+9139	GC    	k_EMsgClientToGCPartyJoinViaCodeResponse
+9140	GC    	k_EMsgGCToClientDevMMStatus
+9141	CLIENT	k_EMsgClientToGCDevForceMatchFormation	SendDevForceMatchFormation
+9142	CLIENT	k_EMsgClientToGCEventRequestInfo	RequestEventInfo
+9143	GC    	k_EMsgGCToClientEventInfo
+9144	CLIENT	k_EMsgClientToGCEventClaim	SendEventClaim
+9145	GC    	k_EMsgClientToGCEventClaimResponse
+9146	CLIENT	k_EMsgClientToGCEquipLoadout	SendEquipLoadout
+9147	GC    	k_EMsgClientToGCEquipLoadoutResponse
+9148	CLIENT	k_EMsgClientToGCSpectateUser	SpectateUser
+9149	GC    	k_EMsgClientToGCSpectateUserResponse
+9150	CLIENT	k_EMsgClientToGCRecordLocalBotMatch	RecordLocalBotMatch
+9151	CLIENT	k_EMsgClientToGCRerollChallenge	RerollChallenge
+9152	GC    	k_EMsgClientToGCRerollChallengeResponse
+9153	CLIENT	k_EMsgClientToGCClaimChallengeReward	SendClaimChallengeReward
+9154	GC    	k_EMsgClientToGCClaimChallengeRewardResponse
+9155	CLIENT	k_EMsgClientToGCCreateFriendCode	CreateFriendCode
+9156	GC    	k_EMsgClientToGCCreateFriendCodeResponse
+9157	CLIENT	k_EMsgClientToGCGetFriendCodes	GetFriendCodes
+9158	GC    	k_EMsgClientToGCGetFriendCodesResponse
+9159	CLIENT	k_EMsgClientToGCCheckFriendCode	CheckFriendCode
+9160	GC    	k_EMsgClientToGCCheckFriendCodeResponse
+9161	CLIENT	k_EMsgClientToGCRedeemFriendCode	RedeemFriendCode
+9162	GC    	k_EMsgClientToGCRedeemFriendCodeResponse
+9163	CLIENT	k_EMsgClientToGCRevokeFriendCode	RevokeFriendCode
+9164	GC    	k_EMsgClientToGCRevokeFriendCodeResponse
+9165	CLIENT	k_EMsgClientToGCEventRequestInfoSync	RequestEventInfoSync
+9166	GC    	k_EMsgClientToGCEventRequestInfoSyncResponse
+9167	CLIENT	k_EMsgClientToGCEventEquipVirtualItem	SendEventEquipVirtualItem
+9168	GC    	k_EMsgClientToGCEventEquipVirtualItemResponse
+9169	CLIENT	k_EMsgClientToGCDevEventOperation	SendDevEventOperation
+9170	GC    	k_EMsgClientToGCDevEventOperationResponse
+9171	GC    	k_EMsgGCToClientUpdateConsoleCommands
+9172	CLIENT	k_EMsgClientToGCPerformAutoActions	SendPerformAutoActions
+9173	GC    	k_EMsgClientToGCPerformAutoActionsResponse
+9174	CLIENT	k_EMsgClientToGCSetActiveUnderlord	SetActiveUnderlord
+9175	GC    	k_EMsgClientToGCSetActiveUnderlordResponse
+
+Computed client methods: [StartMatchmaking StopMatchmaking LeaveLobby SendIsInMatchmaking SendReplacementSDRTicket CreateParty LeaveParty JoinParty SendPartyAction StartPartyMatch SendPartyInviteUser SendPartyClientVersion JoinPartyViaCode SendDevForceMatchFormation RequestEventInfo SendEventClaim SendEquipLoadout SpectateUser RecordLocalBotMatch RerollChallenge SendClaimChallengeReward CreateFriendCode GetFriendCodes CheckFriendCode RedeemFriendCode RevokeFriendCode RequestEventInfoSync SendEventEquipVirtualItem SendDevEventOperation SendPerformAutoActions SetActiveUnderlord]

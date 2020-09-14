@@ -4023,7 +4023,9 @@ func init() {
 	proto.RegisterType((*CMsgGCToGCMasterDestroyCache)(nil), "protocol.CMsgGCToGCMasterDestroyCache")
 }
 
-func init() { proto.RegisterFile("gcsdk_gcmessages.proto", fileDescriptor_7156b0c4726b784f) }
+func init() {
+	proto.RegisterFile("gcsdk_gcmessages.proto", fileDescriptor_7156b0c4726b784f)
+}
 
 var fileDescriptor_7156b0c4726b784f = []byte{
 	// 3732 bytes of a gzipped FileDescriptorProto

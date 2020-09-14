@@ -1920,7 +1920,9 @@ func init() {
 	proto.RegisterType((*CMsgAnyToGCReportAssertsResponse)(nil), "protocol.CMsgAnyToGCReportAssertsResponse")
 }
 
-func init() { proto.RegisterFile("dac_gcmessages_common.proto", fileDescriptor_9ce59cd0086f1143) }
+func init() {
+	proto.RegisterFile("dac_gcmessages_common.proto", fileDescriptor_9ce59cd0086f1143)
+}
 
 var fileDescriptor_9ce59cd0086f1143 = []byte{
 	// 2502 bytes of a gzipped FileDescriptorProto

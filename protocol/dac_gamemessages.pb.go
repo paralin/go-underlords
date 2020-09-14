@@ -6598,7 +6598,9 @@ func init() {
 	proto.RegisterType((*CMsgClientToServerLocalPlayerInventory_LoadoutItem)(nil), "protocol.CMsgClientToServerLocalPlayerInventory.LoadoutItem")
 }
 
-func init() { proto.RegisterFile("dac_gamemessages.proto", fileDescriptor_38e92936699ef625) }
+func init() {
+	proto.RegisterFile("dac_gamemessages.proto", fileDescriptor_38e92936699ef625)
+}
 
 var fileDescriptor_38e92936699ef625 = []byte{
 	// 7432 bytes of a gzipped FileDescriptorProto

@@ -5261,8 +5261,10 @@ type CMsgClientToGCGetFriendCodesResponse_Code struct {
 func (m *CMsgClientToGCGetFriendCodesResponse_Code) Reset() {
 	*m = CMsgClientToGCGetFriendCodesResponse_Code{}
 }
-func (m *CMsgClientToGCGetFriendCodesResponse_Code) String() string { return proto.CompactTextString(m) }
-func (*CMsgClientToGCGetFriendCodesResponse_Code) ProtoMessage()    {}
+func (m *CMsgClientToGCGetFriendCodesResponse_Code) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CMsgClientToGCGetFriendCodesResponse_Code) ProtoMessage() {}
 func (*CMsgClientToGCGetFriendCodesResponse_Code) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d800a06d3c43c09d, []int{59, 0}
 }
@@ -6213,7 +6215,9 @@ func init() {
 	proto.RegisterType((*CMsgClientToGCSetActiveUnderlordResponse)(nil), "protocol.CMsgClientToGCSetActiveUnderlordResponse")
 }
 
-func init() { proto.RegisterFile("dac_gcmessages_client.proto", fileDescriptor_d800a06d3c43c09d) }
+func init() {
+	proto.RegisterFile("dac_gcmessages_client.proto", fileDescriptor_d800a06d3c43c09d)
+}
 
 var fileDescriptor_d800a06d3c43c09d = []byte{
 	// 5276 bytes of a gzipped FileDescriptorProto

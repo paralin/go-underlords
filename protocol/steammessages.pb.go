@@ -5987,7 +5987,9 @@ func init() {
 	proto.RegisterExtension(E_MsgpoolHardLimit)
 }
 
-func init() { proto.RegisterFile("steammessages.proto", fileDescriptor_662a1850681ae3f8) }
+func init() {
+	proto.RegisterFile("steammessages.proto", fileDescriptor_662a1850681ae3f8)
+}
 
 var fileDescriptor_662a1850681ae3f8 = []byte{
 	// 6143 bytes of a gzipped FileDescriptorProto

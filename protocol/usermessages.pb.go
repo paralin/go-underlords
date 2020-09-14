@@ -4267,7 +4267,9 @@ func init() {
 	proto.RegisterType((*CUserMessageAnimStateGraphState)(nil), "protocol.CUserMessageAnimStateGraphState")
 }
 
-func init() { proto.RegisterFile("usermessages.proto", fileDescriptor_6710c15bb7e2e247) }
+func init() {
+	proto.RegisterFile("usermessages.proto", fileDescriptor_6710c15bb7e2e247)
+}
 
 var fileDescriptor_6710c15bb7e2e247 = []byte{
 	// 4185 bytes of a gzipped FileDescriptorProto
