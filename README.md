@@ -10,9 +10,11 @@
 ## Introduction 
 
 **go-underlords** is a DOTA Auto Chess (Underlords) client plugin for go-steam.
-The intent is to replicate as much of the client functionality as possible.
 
-Also see the [Dota2](https://github.com/paralin/go-underlords) implementation.
+Games implemented:
+
+ - [dota2](https://github.com/paralin/go-dota2)
+ - [underlords](https://github.com/paralin/go-underlords)
 
 This project makes use of a dynamic API generator (apigen) designed to
 automatically interpret Valve's various naming conventions into a intermediate
