@@ -3,6 +3,7 @@ package protocol;
 
 import "steammessages.proto";
 import "dac_gcmessages_common.proto";
+import "econ_gcmessages.proto";
 
 option optimize_for = SPEED;
 option cc_generic_services = false;
@@ -26,20 +27,28 @@ enum EGCDACServerMessages {
 	k_EMsgGCToServerAddSpectator = 10016;
 	k_EMsgGCToServerAddSpectatorResponse = 10017;
 	k_EMsgGCToServerUpdateConsoleCommands = 10018;
+	k_EMsgServertoGCPuzzleResults = 10019;
+	k_EMsgServertoGCPuzzleResultsResponse = 10020;
+	k_EMsgServertoGCPuzzleBestRequest = 10021;
+	k_EMsgServertoGCPuzzleBestResponse = 10022;
 }
 
 enum EGCServerLobbyData {
 	k_EServerLobbyData_PlayerInfo = 1;
 	k_EServerLobbyData_PlayerMMR = 2;
+	k_EServerLobbyData_GameModifiers = 3;
 }
 
 enum EGCServerSignoutData {
 	k_EMatchSignoutData_Disconnections = 1;
 	k_EMatchSignoutData_PerformanceStats = 2;
 	k_EMatchSignoutData_CombatStats = 3;
+	k_EMatchSignoutData_PostMatchStats = 4;
 	k_EPlayerSignoutData_MMRUpdate = 10;
 	k_EPlayerSignoutData_EventGrantProgress = 11;
 	k_EPlayerSignoutData_ChatStats = 12;
+	k_EPlayerSignoutData_TeamUpdate = 13;
+	k_EPlayerSignoutData_MatchStats = 14;
 }
 
 message CMsgServerCrashSentinelFile {
@@ -72,10 +81,23 @@ message CServerLobbyData_PlayerMMR {
 		optional uint32 party_index = 7;
 		optional uint32 lords_elo_ante = 8;
 		optional bool lords_elo_ignore = 9;
+		optional float level_score_change_mult = 10 [default = 1];
+	}
+
+	message Team {
+		optional uint32 lords_elo_ante = 3;
+		optional bool lords_elo_ignore = 4;
 	}
 
 	repeated CServerLobbyData_PlayerMMR.Player players = 1;
+	repeated CServerLobbyData_PlayerMMR.Team teams = 2;
 	optional uint32 lords_elo_k = 8;
+	optional float duos_mmr_level_score_change_mult = 9;
+	optional uint32 lords_elo_k_duos = 10;
+}
+
+message CServerLobbyData_GameModifiers {
+	optional CMsgGameModifiers game_modifiers = 1;
 }
 
 message CSODACServerDynamicLobby {
@@ -93,15 +115,20 @@ message CSODACServerStaticLobby {
 		optional uint32 party_index = 6;
 		optional EDACPlatform platform = 7 [default = k_eDACPlatform_None];
 		optional bool chat_muted = 8;
+		optional uint32 active_challenge_slot_id = 9;
 	}
 
 	repeated CExtraMsgBlock extra_messages = 1;
 	optional fixed64 server_steam_id = 2;
 	optional uint64 lobby_id = 3;
 	optional fixed32 replay_salt = 4;
+	optional uint32 active_event_id = 5;
 	repeated CSODACServerStaticLobby.Member members = 6;
 	optional bool trusted_server = 7;
-	optional CSODACParty.EBotDifficulty bot_difficulty = 8 [default = k_eBotDifficulty_None];
+	optional EDACBotDifficulty bot_difficulty = 8 [default = k_EDACBotDifficulty_None];
+	repeated CMsgTeamInfo team_info = 9;
+	optional CMsgGameModeSettings game_mode_settings = 10;
+	optional string feature_controls = 11;
 }
 
 message CMsgMatchSignoutData_PerformanceStats {
@@ -155,6 +182,7 @@ message CMsgMatchSignoutData_CombatStats {
 		optional uint32 final_place = 2;
 		optional uint32 elimination_time_s = 3;
 		optional uint32 elimination_round = 4;
+		optional uint32 underlord_id = 5;
 	}
 
 	repeated CMsgMatchSignoutData_CombatStats.CombatRound combat_rounds = 1;
@@ -175,6 +203,15 @@ message CMsgPlayerSignoutData_MMRUpdate {
 	repeated CMsgPlayerSignoutData_MMRUpdate.Opponent opponents = 2;
 }
 
+message CMsgPlayerSignoutData_MatchStats {
+	message MatchStat {
+		optional uint32 stat_id = 1;
+		optional uint32 value = 2;
+	}
+
+	repeated CMsgPlayerSignoutData_MatchStats.MatchStat match_stats = 1;
+}
+
 message CMsgPlayerSignoutData_EventGrantProgress {
 	message Challenge {
 		optional uint32 slot_id = 1;
@@ -193,10 +230,14 @@ message CMsgPlayerSignoutData_EventGrantProgress {
 }
 
 message CMsgPlayerSignoutData_ChatStats {
-	repeated uint32 muted_by = 1;
-	optional uint32 chat_text_count = 2;
 	optional uint32 yo_count = 3;
 	optional uint32 chat_line_count = 4;
+	optional uint32 combat_line_count = 5;
+}
+
+message CMsgPlayerSignoutData_TeamUpdate {
+	optional uint32 other_team_member = 1;
+	optional uint32 final_place = 2;
 }
 
 message CMsgServerToGCMatchSignout {
@@ -215,6 +256,7 @@ message CMsgServerToGCMatchSignout {
 		optional uint32 final_placement = 6;
 		optional uint32 survival_time_s = 7;
 		optional uint32 survival_round = 8;
+		optional uint32 underlord_id = 9;
 	}
 
 	optional uint64 lobby_id = 1;
@@ -260,6 +302,7 @@ message CMsgServerToGCMatchSignoutPermission {
 	optional EDACMatchMode match_mode = 2 [default = k_EDACMatchMode_Invalid];
 	optional uint32 failed_signouts = 3;
 	optional uint32 permission_request = 4;
+	optional EDACGameMode game_mode = 5 [default = k_EDACGameMode_Invalid];
 }
 
 message CMsgServerToGCMatchSignoutPermissionResponse {
@@ -347,3 +390,31 @@ message CMsgGCToServerUpdateConsoleCommands {
 	repeated string console_commands = 1;
 }
 
+message CMsgServertoGCPuzzleResults {
+	optional uint32 account_id = 1;
+	optional uint32 puzzle_id = 2;
+	optional string board_code = 3;
+	optional uint32 gold = 4;
+	optional uint32 time = 5;
+	optional uint32 health_pct = 6;
+	optional uint32 units = 7;
+}
+
+message CMsgServertoGCPuzzleResultsResponse {
+	optional CMsgPuzzleLeaderboardHistogramList histogram_list = 1;
+}
+
+message CMsgServertoGCPuzzleBestRequest {
+	optional uint32 account_id = 1;
+	optional uint32 puzzle_id = 2;
+}
+
+message CMsgServertoGCPuzzleBestResponse {
+	message Leaderboard {
+		optional uint32 leaderboard_type = 1;
+		optional uint32 value = 2;
+		optional string board_code = 3;
+	}
+
+	repeated CMsgServertoGCPuzzleBestResponse.Leaderboard leaderboards = 1;
+}

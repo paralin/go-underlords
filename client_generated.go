@@ -78,6 +78,35 @@ func (d *DAC) CreateParty(
 	)
 }
 
+// GetDuosRanks gets duos ranks.
+// Request ID: k_EMsgClientToGCGetDuosRanks
+// Response ID: k_EMsgClientToGCGetDuosRanksResponse
+// Request type: CMsgClientToGCGetDuosRanks
+// Response type: CMsgClientToGCGetDuosRanksResponse
+func (d *DAC) GetDuosRanks(
+	ctx context.Context,
+	accountID uint32,
+	cursorValue uint32,
+	batchSize uint32,
+	sortOrder protocol.CMsgClientToGCGetDuosRanks_ESortOrder,
+) (*protocol.CMsgClientToGCGetDuosRanksResponse, error) {
+	req := &protocol.CMsgClientToGCGetDuosRanks{
+		AccountId:   &accountID,
+		CursorValue: &cursorValue,
+		BatchSize:   &batchSize,
+		SortOrder:   &sortOrder,
+	}
+	resp := &protocol.CMsgClientToGCGetDuosRanksResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetDuosRanks),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetDuosRanksResponse),
+		resp,
+	)
+}
+
 // GetFriendCodes gets friend codes.
 // Request ID: k_EMsgClientToGCGetFriendCodes
 // Response ID: k_EMsgClientToGCGetFriendCodesResponse
@@ -94,6 +123,144 @@ func (d *DAC) GetFriendCodes(
 		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetFriendCodes),
 		req,
 		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetFriendCodesResponse),
+		resp,
+	)
+}
+
+// GetFriendRanks gets friend ranks.
+// Request ID: k_EMsgClientToGCGetFriendRanks
+// Response ID: k_EMsgClientToGCGetFriendRanksResponse
+// Request type: CMsgClientToGCGetFriendRanks
+// Response type: CMsgClientToGCGetFriendRanksResponse
+func (d *DAC) GetFriendRanks(
+	ctx context.Context,
+) (*protocol.CMsgClientToGCGetFriendRanksResponse, error) {
+	req := &protocol.CMsgClientToGCGetFriendRanks{}
+	resp := &protocol.CMsgClientToGCGetFriendRanksResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetFriendRanks),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetFriendRanksResponse),
+		resp,
+	)
+}
+
+// GetMatchHistory gets a match history.
+// Request ID: k_EMsgClientToGCGetMatchHistory
+// Response ID: k_EMsgClientToGCGetMatchHistoryResponse
+// Request type: CMsgClientToGCGetMatchHistory
+// Response type: CMsgClientToGCGetMatchHistoryResponse
+func (d *DAC) GetMatchHistory(
+	ctx context.Context,
+	accountID uint32,
+	requestRows uint32,
+	matchIDCursor uint64,
+) (*protocol.CMsgClientToGCGetMatchHistoryResponse, error) {
+	req := &protocol.CMsgClientToGCGetMatchHistory{
+		AccountId:     &accountID,
+		RequestRows:   &requestRows,
+		MatchIdCursor: &matchIDCursor,
+	}
+	resp := &protocol.CMsgClientToGCGetMatchHistoryResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetMatchHistory),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetMatchHistoryResponse),
+		resp,
+	)
+}
+
+// GetPostMatchStats gets post match stats.
+// Request ID: k_EMsgClientToGCGetPostMatchStats
+// Response ID: k_EMsgClientToGCGetPostMatchStatsResponse
+// Request type: CMsgClientToGCGetPostMatchStats
+// Response type: CMsgClientToGCGetPostMatchStatsResponse
+func (d *DAC) GetPostMatchStats(
+	ctx context.Context,
+	matchID uint64,
+) (*protocol.CMsgClientToGCGetPostMatchStatsResponse, error) {
+	req := &protocol.CMsgClientToGCGetPostMatchStats{
+		MatchId: &matchID,
+	}
+	resp := &protocol.CMsgClientToGCGetPostMatchStatsResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetPostMatchStats),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetPostMatchStatsResponse),
+		resp,
+	)
+}
+
+// GetProfile gets a profile.
+// Request ID: k_EMsgClientToGCGetProfile
+// Response ID: k_EMsgClientToGCGetProfileResponse
+// Request type: CMsgClientToGCGetProfile
+// Response type: CMsgClientToGCGetProfileResponse
+func (d *DAC) GetProfile(
+	ctx context.Context,
+	accountID uint32,
+) (*protocol.CMsgClientToGCGetProfileResponse, error) {
+	req := &protocol.CMsgClientToGCGetProfile{
+		AccountId: &accountID,
+	}
+	resp := &protocol.CMsgClientToGCGetProfileResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetProfile),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetProfileResponse),
+		resp,
+	)
+}
+
+// GetPuzzleLeaderboards gets puzzle leaderboards.
+// Request ID: k_EMsgClientToGCGetPuzzleLeaderboards
+// Response ID: k_EMsgClientToGCGetPuzzleLeaderboardsResponse
+// Request type: CMsgClientToGCGetPuzzleLeaderboards
+// Response type: CMsgClientToGCGetPuzzleLeaderboardsResponse
+func (d *DAC) GetPuzzleLeaderboards(
+	ctx context.Context,
+	puzzleID uint32,
+	count uint32,
+) (*protocol.CMsgClientToGCGetPuzzleLeaderboardsResponse, error) {
+	req := &protocol.CMsgClientToGCGetPuzzleLeaderboards{
+		PuzzleId: &puzzleID,
+		Count:    &count,
+	}
+	resp := &protocol.CMsgClientToGCGetPuzzleLeaderboardsResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetPuzzleLeaderboards),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetPuzzleLeaderboardsResponse),
+		resp,
+	)
+}
+
+// GetRegionModeInfo gets a region mode info.
+// Request ID: k_EMsgClientToGCGetRegionModeInfo
+// Response ID: k_EMsgClientToGCGetRegionModeInfoResponse
+// Request type: CMsgClientToGCGetRegionModeInfo
+// Response type: CMsgClientToGCGetRegionModeInfoResponse
+func (d *DAC) GetRegionModeInfo(
+	ctx context.Context,
+) (*protocol.CMsgClientToGCGetRegionModeInfoResponse, error) {
+	req := &protocol.CMsgClientToGCGetRegionModeInfo{}
+	resp := &protocol.CMsgClientToGCGetRegionModeInfoResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetRegionModeInfo),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCGetRegionModeInfoResponse),
 		resp,
 	)
 }
@@ -196,6 +363,129 @@ func (d *DAC) LeaveParty(
 		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCPartyLeave),
 		req,
 		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCPartyLeaveResponse),
+		resp,
+	)
+}
+
+// PurchaseCanItem purchases a can item.
+// Request ID: k_EMsgClientToGCCanPurchaseItem
+// Response ID: k_EMsgClientToGCCanPurchaseItemResponse
+// Request type: CMsgClientToGCCanPurchaseItem
+// Response type: CMsgClientToGCCanPurchaseItemResponse
+func (d *DAC) PurchaseCanItem(
+	ctx context.Context,
+	req *protocol.CMsgClientToGCCanPurchaseItem,
+) (*protocol.CMsgClientToGCCanPurchaseItemResponse, error) {
+	resp := &protocol.CMsgClientToGCCanPurchaseItemResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCCanPurchaseItem),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCCanPurchaseItemResponse),
+		resp,
+	)
+}
+
+// PurchaseClearReserve purchases a clear reserve.
+// Request ID: k_EMsgClientToGCClearPurchaseReserve
+// Response ID: k_EMsgClientToGCClearPurchaseReserveResponse
+// Request type: CMsgClientToGCClearPurchaseReserve
+// Response type: CMsgClientToGCClearPurchaseReserveResponse
+func (d *DAC) PurchaseClearReserve(
+	ctx context.Context,
+	defIndex uint32,
+	storeID protocol.EDACStoreID,
+	deviceID uint64,
+) (*protocol.CMsgClientToGCClearPurchaseReserveResponse, error) {
+	req := &protocol.CMsgClientToGCClearPurchaseReserve{
+		DefIndex: &defIndex,
+		StoreId:  &storeID,
+		DeviceId: &deviceID,
+	}
+	resp := &protocol.CMsgClientToGCClearPurchaseReserveResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCClearPurchaseReserve),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCClearPurchaseReserveResponse),
+		resp,
+	)
+}
+
+// PurchaseEvent purchases a event.
+// Request ID: k_EMsgClientToGCEventPurchase
+// Response ID: k_EMsgClientToGCEventPurchaseResponse
+// Request type: CMsgClientToGCEventPurchase
+// Response type: CMsgClientToGCEventPurchaseResponse
+func (d *DAC) PurchaseEvent(
+	ctx context.Context,
+	eventID uint32,
+	expectedCredits uint32,
+) (*protocol.CMsgClientToGCEventPurchaseResponse, error) {
+	req := &protocol.CMsgClientToGCEventPurchase{
+		EventId:         &eventID,
+		ExpectedCredits: &expectedCredits,
+	}
+	resp := &protocol.CMsgClientToGCEventPurchaseResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventPurchase),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventPurchaseResponse),
+		resp,
+	)
+}
+
+// PurchaseEventCurrency purchases a event currency.
+// Request ID: k_EMsgClientToGCEventPurchaseCurrency
+// Response ID: k_EMsgClientToGCEventPurchaseCurrencyResponse
+// Request type: CMsgClientToGCEventPurchaseCurrency
+// Response type: CMsgClientToGCEventPurchaseCurrencyResponse
+func (d *DAC) PurchaseEventCurrency(
+	ctx context.Context,
+	eventID uint32,
+	purchaseQuantity uint32,
+	expectedCost uint32,
+	currencyID uint32,
+	startingBalance uint32,
+) (*protocol.CMsgClientToGCEventPurchaseCurrencyResponse, error) {
+	req := &protocol.CMsgClientToGCEventPurchaseCurrency{
+		EventId:          &eventID,
+		PurchaseQuantity: &purchaseQuantity,
+		ExpectedCost:     &expectedCost,
+		CurrencyId:       &currencyID,
+		StartingBalance:  &startingBalance,
+	}
+	resp := &protocol.CMsgClientToGCEventPurchaseCurrencyResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventPurchaseCurrency),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventPurchaseCurrencyResponse),
+		resp,
+	)
+}
+
+// PurchaseItemHandle purchases a item handle.
+// Request ID: k_EMsgClientToGCHandleItemPurchase
+// Response ID: k_EMsgClientToGCHandleItemPurchaseResponse
+// Request type: CMsgClientToGCHandleItemPurchase
+// Response type: CMsgClientToGCHandleItemPurchaseResponse
+func (d *DAC) PurchaseItemHandle(
+	ctx context.Context,
+	req *protocol.CMsgClientToGCHandleItemPurchase,
+) (*protocol.CMsgClientToGCHandleItemPurchaseResponse, error) {
+	resp := &protocol.CMsgClientToGCHandleItemPurchaseResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCHandleItemPurchase),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCHandleItemPurchaseResponse),
 		resp,
 	)
 }
@@ -323,6 +613,56 @@ func (d *DAC) RevokeFriendCode(
 	)
 }
 
+// SendAckSupportCredits sends ack support credits.
+// Request ID: k_EMsgClientToGCAckSupportCredits
+// Response ID: k_EMsgClientToGCAckSupportCreditsResponse
+// Request type: CMsgClientToGCAckSupportCredits
+// Response type: CMsgClientToGCAckSupportCreditsResponse
+func (d *DAC) SendAckSupportCredits(
+	ctx context.Context,
+	itemID uint64,
+) (*protocol.CMsgClientToGCAckSupportCreditsResponse, error) {
+	req := &protocol.CMsgClientToGCAckSupportCredits{
+		ItemId: &itemID,
+	}
+	resp := &protocol.CMsgClientToGCAckSupportCreditsResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCAckSupportCredits),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCAckSupportCreditsResponse),
+		resp,
+	)
+}
+
+// SendAssociateDevice sends a associate device.
+// Request ID: k_EMsgClientToGCAssociateDevice
+// Response ID: k_EMsgClientToGCAssociateDeviceResponse
+// Request type: CMsgClientToGCAssociateDevice
+// Response type: CMsgClientToGCAssociateDeviceResponse
+func (d *DAC) SendAssociateDevice(
+	ctx context.Context,
+	deviceID uint64,
+	platform protocol.EDACPlatform,
+	salt uint32,
+) (*protocol.CMsgClientToGCAssociateDeviceResponse, error) {
+	req := &protocol.CMsgClientToGCAssociateDevice{
+		DeviceId: &deviceID,
+		Platform: &platform,
+		Salt:     &salt,
+	}
+	resp := &protocol.CMsgClientToGCAssociateDeviceResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCAssociateDevice),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCAssociateDeviceResponse),
+		resp,
+	)
+}
+
 // SendClaimChallengeReward sends a claim challenge reward.
 // Request ID: k_EMsgClientToGCClaimChallengeReward
 // Response ID: k_EMsgClientToGCClaimChallengeRewardResponse
@@ -359,17 +699,8 @@ func (d *DAC) SendClaimChallengeReward(
 // Response type: CMsgClientToGCDevEventOperationResponse
 func (d *DAC) SendDevEventOperation(
 	ctx context.Context,
-	operation protocol.CMsgClientToGCDevEventOperation_EOperation,
-	eventID uint32,
-	iD uint32,
-	amount uint32,
+	req *protocol.CMsgClientToGCDevEventOperation,
 ) (*protocol.CMsgClientToGCDevEventOperationResponse, error) {
-	req := &protocol.CMsgClientToGCDevEventOperation{
-		Operation: &operation,
-		EventId:   &eventID,
-		Id:        &iD,
-		Amount:    &amount,
-	}
 	resp := &protocol.CMsgClientToGCDevEventOperationResponse{}
 
 	return resp, d.MakeRequest(
@@ -387,6 +718,35 @@ func (d *DAC) SendDevEventOperation(
 func (d *DAC) SendDevForceMatchFormation() {
 	req := &protocol.CMsgClientToGCDevForceMatchFormation{}
 	d.write(uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCDevForceMatchFormation), req)
+}
+
+// SendDevOperation sends a dev operation.
+// Request ID: k_EMsgClientToGCDevOperation
+// Response ID: k_EMsgClientToGCDevOperationResponse
+// Request type: CMsgClientToGCDevOperation
+// Response type: CMsgClientToGCDevOperationResponse
+func (d *DAC) SendDevOperation(
+	ctx context.Context,
+	op protocol.CMsgClientToGCDevOperation_EOperation,
+	uintValue uint64,
+	strValue string,
+	uintValue2 uint64,
+) (*protocol.CMsgClientToGCDevOperationResponse, error) {
+	req := &protocol.CMsgClientToGCDevOperation{
+		Op:          &op,
+		UintValue:   &uintValue,
+		StrValue:    &strValue,
+		UintValue_2: &uintValue2,
+	}
+	resp := &protocol.CMsgClientToGCDevOperationResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCDevOperation),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCDevOperationResponse),
+		resp,
+	)
 }
 
 // SendEquipLoadout sends a equip loadout.
@@ -412,6 +772,57 @@ func (d *DAC) SendEquipLoadout(
 		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEquipLoadout),
 		req,
 		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEquipLoadoutResponse),
+		resp,
+	)
+}
+
+// SendEventChallengeProgress sends event challenge progress.
+// Request ID: k_EMsgClientToGCEventChallengeProgress
+// Response ID: k_EMsgClientToGCEventChallengeProgressResponse
+// Request type: CMsgClientToGCEventChallengeProgress
+// Response type: CMsgClientToGCEventChallengeProgressResponse
+func (d *DAC) SendEventChallengeProgress(
+	ctx context.Context,
+	eventID uint32,
+	slotID uint32,
+	sequenceID uint32,
+	progress uint32,
+	auditData uint64,
+) (*protocol.CMsgClientToGCEventChallengeProgressResponse, error) {
+	req := &protocol.CMsgClientToGCEventChallengeProgress{
+		EventId:    &eventID,
+		SlotId:     &slotID,
+		SequenceId: &sequenceID,
+		Progress:   &progress,
+		AuditData:  &auditData,
+	}
+	resp := &protocol.CMsgClientToGCEventChallengeProgressResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventChallengeProgress),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventChallengeProgressResponse),
+		resp,
+	)
+}
+
+// SendEventChallengeProgressWithCurrency sends a event challenge progress with currency.
+// Request ID: k_EMsgClientToGCEventChallengeProgressWithCurrency
+// Response ID: k_EMsgClientToGCEventChallengeProgressWithCurrencyResponse
+// Request type: CMsgClientToGCEventChallengeProgressWithCurrency
+// Response type: CMsgClientToGCEventChallengeProgressWithCurrencyResponse
+func (d *DAC) SendEventChallengeProgressWithCurrency(
+	ctx context.Context,
+	req *protocol.CMsgClientToGCEventChallengeProgressWithCurrency,
+) (*protocol.CMsgClientToGCEventChallengeProgressWithCurrencyResponse, error) {
+	resp := &protocol.CMsgClientToGCEventChallengeProgressWithCurrencyResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventChallengeProgressWithCurrency),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventChallengeProgressWithCurrencyResponse),
 		resp,
 	)
 }
@@ -443,31 +854,27 @@ func (d *DAC) SendEventClaim(
 	)
 }
 
-// SendEventEquipVirtualItem sends a event equip virtual item.
-// Request ID: k_EMsgClientToGCEventEquipVirtualItem
-// Response ID: k_EMsgClientToGCEventEquipVirtualItemResponse
-// Request type: CMsgClientToGCEventEquipVirtualItem
-// Response type: CMsgClientToGCEventEquipVirtualItemResponse
-func (d *DAC) SendEventEquipVirtualItem(
+// SendEventEquipVirtualItems sends event equip virtual items.
+// Request ID: k_EMsgClientToGCEventEquipVirtualItems
+// Response ID: k_EMsgClientToGCEventEquipVirtualItemsResponse
+// Request type: CMsgClientToGCEventEquipVirtualItems
+// Response type: CMsgClientToGCEventEquipVirtualItemsResponse
+func (d *DAC) SendEventEquipVirtualItems(
 	ctx context.Context,
 	eventID uint32,
-	defIndex uint32,
-	equipSlot uint32,
-	equipSubSlot uint32,
-) (*protocol.CMsgClientToGCEventEquipVirtualItemResponse, error) {
-	req := &protocol.CMsgClientToGCEventEquipVirtualItem{
-		EventId:      &eventID,
-		DefIndex:     &defIndex,
-		EquipSlot:    &equipSlot,
-		EquipSubSlot: &equipSubSlot,
+	equipList []*protocol.CMsgClientToGCEventEquipVirtualItems_Equip,
+) (*protocol.CMsgClientToGCEventEquipVirtualItemsResponse, error) {
+	req := &protocol.CMsgClientToGCEventEquipVirtualItems{
+		EventId:   &eventID,
+		EquipList: equipList,
 	}
-	resp := &protocol.CMsgClientToGCEventEquipVirtualItemResponse{}
+	resp := &protocol.CMsgClientToGCEventEquipVirtualItemsResponse{}
 
 	return resp, d.MakeRequest(
 		ctx,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventEquipVirtualItem),
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventEquipVirtualItems),
 		req,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventEquipVirtualItemResponse),
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCEventEquipVirtualItemsResponse),
 		resp,
 	)
 }
@@ -570,13 +977,11 @@ func (d *DAC) SendPartyInviteUser(
 func (d *DAC) SendPerformAutoActions(
 	ctx context.Context,
 	eventID uint32,
-	updateAutoClaims bool,
 	updateChallengeSlots []uint32,
 	updateClaims []uint32,
 ) (*protocol.CMsgClientToGCPerformAutoActionsResponse, error) {
 	req := &protocol.CMsgClientToGCPerformAutoActions{
 		EventId:              &eventID,
-		UpdateAutoClaims:     &updateAutoClaims,
 		UpdateChallengeSlots: updateChallengeSlots,
 		UpdateClaims:         updateClaims,
 	}
@@ -614,25 +1019,81 @@ func (d *DAC) SendReplacementSDRTicket(
 	)
 }
 
-// SetActiveUnderlord sets a active underlord.
-// Request ID: k_EMsgClientToGCSetActiveUnderlord
-// Response ID: k_EMsgClientToGCSetActiveUnderlordResponse
-// Request type: CMsgClientToGCSetActiveUnderlord
-// Response type: CMsgClientToGCSetActiveUnderlordResponse
-func (d *DAC) SetActiveUnderlord(
+// SendUpdateAccountSync sends a update account sync.
+// Request ID: k_EMsgClientToGCUpdateAccountSync
+// Response ID: k_EMsgClientToGCUpdateAccountSyncResponse
+// Request type: CMsgClientToGCUpdateAccountSync
+// Response type: CMsgClientToGCUpdateAccountSyncResponse
+func (d *DAC) SendUpdateAccountSync(
 	ctx context.Context,
-	underlordID uint32,
-) (*protocol.CMsgClientToGCSetActiveUnderlordResponse, error) {
-	req := &protocol.CMsgClientToGCSetActiveUnderlord{
-		UnderlordId: &underlordID,
+	ids []uint32,
+	values []uint32,
+) (*protocol.CMsgClientToGCUpdateAccountSyncResponse, error) {
+	req := &protocol.CMsgClientToGCUpdateAccountSync{
+		Ids:    ids,
+		Values: values,
 	}
-	resp := &protocol.CMsgClientToGCSetActiveUnderlordResponse{}
+	resp := &protocol.CMsgClientToGCUpdateAccountSyncResponse{}
 
 	return resp, d.MakeRequest(
 		ctx,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCSetActiveUnderlord),
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCUpdateAccountSync),
 		req,
-		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCSetActiveUnderlordResponse),
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCUpdateAccountSyncResponse),
+		resp,
+	)
+}
+
+// SetPartyGameModifier sets a party game modifier.
+// Request ID: k_EMsgClientToGCPartySetGameModifier
+// Response ID: k_EMsgClientToGCPartySetGameModifierResponse
+// Request type: CMsgClientToGCPartySetGameModifier
+// Response type: CMsgClientToGCPartySetGameModifierResponse
+func (d *DAC) SetPartyGameModifier(
+	ctx context.Context,
+	partyID uint64,
+	useCustomModifier bool,
+	customModifier protocol.CMsgGameModifiers,
+) (*protocol.CMsgClientToGCPartySetGameModifierResponse, error) {
+	req := &protocol.CMsgClientToGCPartySetGameModifier{
+		PartyId:           &partyID,
+		UseCustomModifier: &useCustomModifier,
+		CustomModifier:    &customModifier,
+	}
+	resp := &protocol.CMsgClientToGCPartySetGameModifierResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCPartySetGameModifier),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCPartySetGameModifierResponse),
+		resp,
+	)
+}
+
+// SetTeamName sets a team name.
+// Request ID: k_EMsgClientToGCSetTeamName
+// Response ID: k_EMsgClientToGCSetTeamNameResponse
+// Request type: CMsgClientToGCSetTeamName
+// Response type: CMsgClientToGCSetTeamNameResponse
+func (d *DAC) SetTeamName(
+	ctx context.Context,
+	routingID uint32,
+	otherAccountID uint32,
+	teamName string,
+) (*protocol.CMsgClientToGCSetTeamNameResponse, error) {
+	req := &protocol.CMsgClientToGCSetTeamName{
+		RoutingId:      &routingID,
+		OtherAccountId: &otherAccountID,
+		TeamName:       &teamName,
+	}
+	resp := &protocol.CMsgClientToGCSetTeamNameResponse{}
+
+	return resp, d.MakeRequest(
+		ctx,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCSetTeamName),
+		req,
+		uint32(protocol.EGCDACClientMessages_k_EMsgClientToGCSetTeamNameResponse),
 		resp,
 	)
 }
@@ -645,9 +1106,11 @@ func (d *DAC) SetActiveUnderlord(
 func (d *DAC) SpectateUser(
 	ctx context.Context,
 	spectateAccountID uint32,
+	regionMode protocol.EDACRegionMode,
 ) (*protocol.CMsgClientToGCSpectateUserResponse, error) {
 	req := &protocol.CMsgClientToGCSpectateUser{
 		SpectateAccountId: &spectateAccountID,
+		RegionMode:        &regionMode,
 	}
 	resp := &protocol.CMsgClientToGCSpectateUserResponse{}
 
@@ -692,17 +1155,8 @@ func (d *DAC) StartMatchmaking(
 // Response type: CMsgClientToGCPartyStartMatchResponse
 func (d *DAC) StartPartyMatch(
 	ctx context.Context,
-	partyID uint64,
-	privateMatch bool,
-	serverSearchKey string,
-	matchMode protocol.EDACMatchMode,
+	req *protocol.CMsgClientToGCPartyStartMatch,
 ) (*protocol.CMsgClientToGCPartyStartMatchResponse, error) {
-	req := &protocol.CMsgClientToGCPartyStartMatch{
-		PartyId:         &partyID,
-		PrivateMatch:    &privateMatch,
-		ServerSearchKey: &serverSearchKey,
-		MatchMode:       &matchMode,
-	}
 	resp := &protocol.CMsgClientToGCPartyStartMatchResponse{}
 
 	return resp, d.MakeRequest(
@@ -736,14 +1190,23 @@ func (d *DAC) StopMatchmaking(
 
 // registerGeneratedHandlers registers the auto-generated event handlers.
 func (d *DAC) registerGeneratedHandlers() {
+	d.handlers[uint32(protocol.EGCDACClientMessages_k_EMsgGCToClientAcquireRegionModeInfo)] = d.getEventEmitter(func() events.Event {
+		return &events.AcquireRegionModeInfo{}
+	})
 	d.handlers[uint32(protocol.EGCDACClientMessages_k_EMsgGCToClientCanRejoinParty)] = d.getEventEmitter(func() events.Event {
 		return &events.CanRejoinParty{}
 	})
 	d.handlers[uint32(protocol.EGCDACClientMessages_k_EMsgGCToClientDevMMStatus)] = d.getEventEmitter(func() events.Event {
 		return &events.DevMMStatus{}
 	})
+	d.handlers[uint32(protocol.EGCDACClientMessages_k_EMsgGCToClientDurationControlWarning)] = d.getEventEmitter(func() events.Event {
+		return &events.DurationControlWarning{}
+	})
 	d.handlers[uint32(protocol.EGCDACClientMessages_k_EMsgGCToClientEventInfo)] = d.getEventEmitter(func() events.Event {
 		return &events.EventInfo{}
+	})
+	d.handlers[uint32(protocol.EGCDACClientMessages_k_EMsgGCToClientGameModifiersUpdated)] = d.getEventEmitter(func() events.Event {
+		return &events.GameModifiersUpdated{}
 	})
 	d.handlers[uint32(protocol.EGCDACClientMessages_k_EMsgGCToClientMatchmakingStopped)] = d.getEventEmitter(func() events.Event {
 		return &events.MatchmakingStopped{}

@@ -46,7 +46,8 @@ enum EBaseUserMessages {
 	UM_HudError = 146;
 	UM_CustomGameEvent = 148;
 	UM_AnimGraphUpdate = 149;
-	UM_HapticsManager = 150;
+	UM_HapticsManagerPulse = 150;
+	UM_HapticsManagerEffect = 151;
 	UM_MAX_BASE = 200;
 }
 
@@ -89,6 +90,7 @@ enum PARTICLE_MESSAGE {
 	GAME_PARTICLE_MANAGER_EVENT_SET_CONTROL_POINT_MODEL = 18;
 	GAME_PARTICLE_MANAGER_EVENT_SET_CONTROL_POINT_SNAPSHOT = 19;
 	GAME_PARTICLE_MANAGER_EVENT_SET_TEXTURE_ATTRIBUTE = 20;
+	GAME_PARTICLE_MANAGER_EVENT_SET_SCENE_OBJECT_GENERIC_FLAG = 21;
 }
 
 enum EHapticPulseType {
@@ -357,6 +359,7 @@ message CUserMsg_ParticleManager {
 		optional int32 entity_handle = 3;
 		optional int32 entity_handle_for_modifiers = 4;
 		optional bool apply_voice_ban_rules = 5;
+		optional int32 team_behavior = 6;
 	}
 
 	message DestroyParticle {
@@ -454,6 +457,10 @@ message CUserMsg_ParticleManager {
 		optional string texture_name = 2;
 	}
 
+	message SetSceneObjectGenericFlag {
+		optional bool flag_value = 1;
+	}
+
 	required PARTICLE_MESSAGE type = 1 [default = GAME_PARTICLE_MANAGER_EVENT_CREATE];
 	required uint32 index = 2;
 	optional CUserMsg_ParticleManager.ReleaseParticleIndex release_particle_index = 3;
@@ -476,6 +483,7 @@ message CUserMsg_ParticleManager {
 	optional CUserMsg_ParticleManager.SetControlPointModel set_control_point_model = 21;
 	optional CUserMsg_ParticleManager.SetControlPointSnapshot set_control_point_snapshot = 22;
 	optional CUserMsg_ParticleManager.SetTextureAttribute set_texture_attribute = 23;
+	optional CUserMsg_ParticleManager.SetSceneObjectGenericFlag set_scene_object_generic_flag = 24;
 }
 
 message CUserMsg_HudError {
@@ -487,15 +495,20 @@ message CUserMsg_CustomGameEvent {
 	optional bytes data = 2;
 }
 
-message CUserMessageHapticsManager {
+message CUserMessageHapticsManagerPulse {
+	optional int32 hand_id = 1;
+	optional float effect_amplitude = 2;
+	optional float effect_frequency = 3;
+	optional float effect_duration = 4;
+}
+
+message CUserMessageHapticsManagerEffect {
 	optional int32 hand_id = 1;
 	optional uint32 effect_name_hash_code = 2;
 	optional float effect_scale = 3;
-	optional float effect_duration = 4;
 }
 
 message CUserMessageAnimStateGraphState {
 	optional int32 entity_index = 1;
 	optional bytes data = 2;
 }
-

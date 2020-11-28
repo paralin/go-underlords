@@ -2,6 +2,7 @@ syntax = "proto2";
 package protocol;
 
 import "steammessages.proto";
+import "econ_gcmessages.proto";
 
 option optimize_for = SPEED;
 option cc_generic_services = false;
@@ -17,6 +18,19 @@ enum EGCDACCommonMessages {
 	k_EMsgGCItemEditorReleaseReservationResponse = 7288;
 }
 
+enum EDACStoreID {
+	k_EDACStoreID_Invalid = 0;
+	k_EDACStoreID_iOS = 1;
+	k_EDACStoreID_GooglePlay = 2;
+	k_EDACStoreID_SteamOverlay = 3;
+	k_EDACStoreID_Test = 4;
+}
+
+enum EDACRegionMode {
+	k_EDACRegionMode_ROW = 0;
+	k_EDACRegionMode_China = 1;
+}
+
 enum EDACMatchMode {
 	k_EDACMatchMode_Invalid = 0;
 	k_EDACMatchMode_Casual = 1;
@@ -29,7 +43,13 @@ enum EDACGameMode {
 	k_EDACGameMode_Invalid = 0;
 	k_EDACGameMode_Normal = 1;
 	k_EDACGameMode_Turbo = 2;
-	k_EDACGameMode_BuddyBattles = 3;
+	k_EDACGameMode_Duos = 3;
+	k_EDACGameMode_TechPrototypeA = 4;
+	k_EDACGameMode_Sandbox = 5;
+	k_EDACGameMode_Puzzle = 6;
+	k_EDACGameMode_Tutorial = 7;
+	k_EDACGameMode_Streetfight = 8;
+	k_EDACGameMode_Classic = 11;
 }
 
 enum EDACLobbyTeam {
@@ -44,6 +64,16 @@ enum EDACLobbyTeam {
 	k_EDACLobbyTeam_Spectator = 250;
 }
 
+enum EDACBotDifficulty {
+	k_EDACBotDifficulty_None = 0;
+	k_EDACBotDifficulty_Easy = 1;
+	k_EDACBotDifficulty_Medium = 2;
+	k_EDACBotDifficulty_Hard = 3;
+	k_EDACBotDifficulty_Nightmare = 4;
+	k_EDACBotDifficulty_ML = 5;
+	k_EDACBotDifficulty_MommaEeb = 6;
+}
+
 enum EDACAIType {
 	k_EDACAIType_Invalid = 0;
 	k_EDACAIType_Lvl1 = 1;
@@ -54,6 +84,7 @@ enum EDACAIType {
 	k_EDACAIType_Lvl6 = 6;
 	k_EDACAIType_Lvl7 = 7;
 	k_EDACAIType_Lvl8 = 8;
+	k_EDACAIType_ML = 19;
 	k_EDACAIType_PB0 = 20;
 	k_EDACAIType_PB1 = 21;
 	k_EDACAIType_PB2 = 22;
@@ -75,6 +106,21 @@ enum EDACAIType {
 	k_EDACAIType_PB18 = 38;
 	k_EDACAIType_PB19 = 39;
 	k_EDACAIType_PB20 = 40;
+	k_EDACAIType_PB21 = 41;
+	k_EDACAIType_PB22 = 42;
+	k_EDACAIType_PB23 = 43;
+	k_EDACAIType_PB24 = 44;
+	k_EDACAIType_PB25 = 45;
+	k_EDACAIType_PB26 = 46;
+	k_EDACAIType_PB27 = 47;
+	k_EDACAIType_PB28 = 48;
+	k_EDACAIType_PB29 = 49;
+	k_EDACAIType_PB30 = 50;
+	k_EDACAIType_PB31 = 51;
+	k_EDACAIType_PB32 = 52;
+	k_EDACAIType_PB33 = 53;
+	k_EDACAIType_PB34 = 54;
+	k_EDACAIType_PB35 = 55;
 }
 
 enum EDACMatchState {
@@ -100,11 +146,15 @@ enum ELobbyServerState {
 	k_eLobbyServerState_Abandoned = 4;
 }
 
-message CExtraMsgBlock {
-	optional uint32 msg_type = 1;
-	optional bytes contents = 2;
-	optional uint64 msg_key = 3;
-	optional bool is_compressed = 4;
+message CMsgGameModifiers {
+}
+
+message CMsgTeamInfo {
+	repeated uint32 member_account_ids = 1 [packed = true];
+	optional string team_name = 2;
+	optional uint32 mmr_level_score = 3;
+	optional uint32 mmr_level = 4;
+	optional uint32 mmr_leaderboard_place = 5;
 }
 
 message CServerLobbyData_PlayerInfo {
@@ -147,7 +197,6 @@ message CServerLobbyData_PlayerInfo {
 	repeated CServerLobbyData_PlayerInfo.LoadoutSlot loadout = 3;
 	repeated CServerLobbyData_PlayerInfo.Event events = 4;
 	optional uint32 global_leaderboard_rank = 5;
-	optional uint32 underlord = 6;
 }
 
 message CMsgRegionPingTimesClient {
@@ -159,6 +208,7 @@ message CSODACLobby {
 	optional uint32 server_version = 1;
 	optional uint32 compatibility_version = 2;
 	optional fixed64 server_steam_id = 3;
+	optional bool dev_ignore_staging_files = 4;
 	optional uint64 lobby_id = 5;
 	optional uint64 match_id = 6;
 	optional ELobbyServerState server_state = 8 [default = k_eLobbyServerState_Assign];
@@ -177,6 +227,7 @@ message CSODACParty {
 		optional CSODACParty.EPlayerType player_type = 5 [default = k_ePlayerType_Player];
 		optional uint32 compatibility_version = 6;
 		optional EDACPlatform platform = 7 [default = k_eDACPlatform_None];
+		optional uint32 team = 8;
 	}
 
 	message LeftMember {
@@ -191,6 +242,21 @@ message CSODACParty {
 		optional uint32 invited_by = 3;
 	}
 
+	message TeamInfo {
+		repeated uint32 account_ids = 1 [packed = true];
+		optional string team_name = 2;
+		optional uint32 first_played = 3;
+		optional uint32 games_played = 4;
+		optional uint32 num_first_place = 6;
+		optional uint32 num_top_three = 7;
+		optional uint32 mmr_level = 8;
+		optional uint32 mmr_level_progress = 9;
+		optional uint32 mmr_level_score = 10;
+		optional uint32 flags = 11;
+		optional uint32 leaderboard_place = 12;
+		optional uint32 games_to_unlock_rename = 13;
+	}
+
 	enum EMemberRights {
 		k_eMemberRights_Admin = 1;
 		k_eMemberRights_Creator = 2;
@@ -203,12 +269,9 @@ message CSODACParty {
 		k_ePlayerType_Spectator = 1;
 	}
 
-	enum EBotDifficulty {
-		k_eBotDifficulty_None = 0;
-		k_eBotDifficulty_Easy = 1;
-		k_eBotDifficulty_Medium = 2;
-		k_eBotDifficulty_Hard = 3;
-		k_eBotDifficulty_Nightmare = 4;
+	enum ETeamFlags {
+		k_eTeamFlags_CanRename = 1;
+		k_eTeamFlags_RenameCooldown = 2;
 	}
 
 	optional uint64 party_id = 1;
@@ -218,7 +281,16 @@ message CSODACParty {
 	optional string party_password = 6;
 	repeated CSODACParty.LeftMember left_members = 10;
 	optional uint64 join_code = 11;
-	optional CSODACParty.EBotDifficulty bot_difficulty = 12 [default = k_eBotDifficulty_None];
+	optional EDACBotDifficulty bot_difficulty = 12 [default = k_EDACBotDifficulty_None];
+	optional bool use_custom_modifier = 13;
+	optional CMsgGameModifiers custom_modifier = 14;
+	repeated CSODACParty.TeamInfo teams = 15;
+}
+
+message CSOAccountSyncStorage {
+	optional uint32 account_id = 1;
+	optional uint32 id = 2;
+	optional uint32 value = 3;
 }
 
 message CSOGameAccountClient {
@@ -227,16 +299,46 @@ message CSOGameAccountClient {
 	optional uint32 mmr_leaderboard = 3;
 	optional uint64 flags = 4;
 	optional uint32 unlock_ranked_progress = 5;
-	optional uint32 active_underlord = 7;
 	optional float mmr_level_partial_progress = 6;
 	optional uint32 mmr_level_score = 8;
+	optional uint32 mm_ban_time_stamp = 9;
+	optional uint32 mm_ban_reason = 10;
+	optional uint32 mm_ranked_ban_time_stamp = 11;
+	optional uint32 mm_ranked_ban_reason = 12;
+	optional uint32 credits = 13;
+	optional uint32 turbo_mmr_level = 14;
+	optional uint32 turbo_mmr_leaderboard = 15;
+	optional float turbo_mmr_level_partial_progress = 16;
+	optional uint32 turbo_mmr_level_score = 17;
+	optional uint32 wins_1st = 18;
+	optional uint32 wins_2nd = 19;
+	optional uint32 wins_3rd = 20;
+}
+
+message CMsgStreetfightSettings {
+	optional uint32 underlord_id = 1;
+	optional uint32 streetfight_id = 2;
+	repeated uint32 item_ids_for_player = 3;
+	optional uint32 prestige_level = 4;
+}
+
+message CMsgGameModeSettings {
+	oneof settings {
+		uint32 puzzle_id = 1;
+		uint32 tutorial_phase = 2;
+		string sandbox_share_code = 3;
+		CMsgStreetfightSettings streetfight_settings = 4;
+	}
 }
 
 message CMsgStartFindingMatchInfo {
 	optional uint32 client_version = 2;
 	optional EDACMatchMode match_mode = 3 [default = k_EDACMatchMode_Invalid];
 	optional EDACPlatform platform = 4 [default = k_eDACPlatform_None];
-	optional CSODACParty.EBotDifficulty bot_difficulty = 5 [default = k_eBotDifficulty_None];
+	optional EDACBotDifficulty bot_difficulty = 5 [default = k_EDACBotDifficulty_None];
+	optional EDACGameMode game_mode = 6 [default = k_EDACGameMode_Invalid];
+	optional EDACRegionMode region_mode = 8 [default = k_EDACRegionMode_ROW];
+	optional CMsgGameModeSettings game_mode_settings = 9;
 }
 
 message CMsgAnyToGCReportAsserts {
@@ -258,3 +360,21 @@ message CMsgAnyToGCReportAssertsResponse {
 	optional bool success = 1;
 }
 
+message CMsgHistogram {
+	message HistogramBucket {
+		optional uint32 value = 1;
+		optional uint32 count = 2;
+	}
+
+	repeated CMsgHistogram.HistogramBucket histogram_buckets = 1;
+}
+
+message CMsgPuzzleLeaderboardHistogram {
+	optional uint32 puzzle_id = 1;
+	optional uint32 leaderboard_type = 2;
+	optional CMsgHistogram histogram = 3;
+}
+
+message CMsgPuzzleLeaderboardHistogramList {
+	repeated CMsgPuzzleLeaderboardHistogram leaderboard_histograms = 1;
+}

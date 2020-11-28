@@ -174,6 +174,7 @@ message CNETMsg_SpawnGroup_Load {
 	optional uint32 creationsequence = 16;
 	optional string savegamefilename = 17;
 	optional uint32 spawngroupparenthandle = 18;
+	optional bool leveltransition = 19;
 }
 
 message CNETMsg_SpawnGroup_ManifestUpdate {
@@ -219,4 +220,3 @@ message CSVCMsg_GameSessionConfiguration {
 	optional string previouslevel = 17;
 	optional string landmarkname = 18;
 }
-

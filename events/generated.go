@@ -5,6 +5,27 @@ import (
 	"github.com/paralin/go-underlords/protocol"
 )
 
+// AcquireRegionModeInfo event.
+// MessageID: k_EMsgGCToClientAcquireRegionModeInfo
+type AcquireRegionModeInfo struct {
+	protocol.CMsgGCToClientAcquireRegionModeInfo
+}
+
+// GetDotaEventMsgID returns the dota message ID of the event.
+func (e *AcquireRegionModeInfo) GetDotaEventMsgID() protocol.EGCDACClientMessages {
+	return protocol.EGCDACClientMessages_k_EMsgGCToClientAcquireRegionModeInfo
+}
+
+// GetEventBody returns the event body.
+func (e *AcquireRegionModeInfo) GetEventBody() proto.Message {
+	return &e.CMsgGCToClientAcquireRegionModeInfo
+}
+
+// GetEventName returns the event name.
+func (e *AcquireRegionModeInfo) GetEventName() string {
+	return "AcquireRegionModeInfo"
+}
+
 // CanRejoinParty event.
 // MessageID: k_EMsgGCToClientCanRejoinParty
 type CanRejoinParty struct {
@@ -47,6 +68,27 @@ func (e *DevMMStatus) GetEventName() string {
 	return "DevMMStatus"
 }
 
+// DurationControlWarning event.
+// MessageID: k_EMsgGCToClientDurationControlWarning
+type DurationControlWarning struct {
+	protocol.CMsgGCToClientDurationControlWarning
+}
+
+// GetDotaEventMsgID returns the dota message ID of the event.
+func (e *DurationControlWarning) GetDotaEventMsgID() protocol.EGCDACClientMessages {
+	return protocol.EGCDACClientMessages_k_EMsgGCToClientDurationControlWarning
+}
+
+// GetEventBody returns the event body.
+func (e *DurationControlWarning) GetEventBody() proto.Message {
+	return &e.CMsgGCToClientDurationControlWarning
+}
+
+// GetEventName returns the event name.
+func (e *DurationControlWarning) GetEventName() string {
+	return "DurationControlWarning"
+}
+
 // EventInfo event.
 // MessageID: k_EMsgGCToClientEventInfo
 type EventInfo struct {
@@ -66,6 +108,27 @@ func (e *EventInfo) GetEventBody() proto.Message {
 // GetEventName returns the event name.
 func (e *EventInfo) GetEventName() string {
 	return "EventInfo"
+}
+
+// GameModifiersUpdated event.
+// MessageID: k_EMsgGCToClientGameModifiersUpdated
+type GameModifiersUpdated struct {
+	protocol.CMsgGCToClientGameModifiersUpdated
+}
+
+// GetDotaEventMsgID returns the dota message ID of the event.
+func (e *GameModifiersUpdated) GetDotaEventMsgID() protocol.EGCDACClientMessages {
+	return protocol.EGCDACClientMessages_k_EMsgGCToClientGameModifiersUpdated
+}
+
+// GetEventBody returns the event body.
+func (e *GameModifiersUpdated) GetEventBody() proto.Message {
+	return &e.CMsgGCToClientGameModifiersUpdated
+}
+
+// GetEventName returns the event name.
+func (e *GameModifiersUpdated) GetEventName() string {
+	return "GameModifiersUpdated"
 }
 
 // MatchmakingStopped event.
